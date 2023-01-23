@@ -1,13 +1,16 @@
 const router = require('express').Router()
+const bodyParser = require('body-parser')
+const jsonParser = bodyParser.json()
 
 router.use((req, res, next) => {
   console.log(`Request received: Time: ${Date.now()}`)
   next()
 })
 
-router.get('/api/checkboxes', (req, res) => {
+router.post('/api/fruit', jsonParser, (req, res) => {
   console.log(`Request recieved to endpoint /api/checkboxes`)
-  res.json([{data: ['Strawberry', 'Banana', 'Apple', 'Orange']}])
+  console.log(req.body)
+  res.send("Ok")
 })
 
 module.exports = router
