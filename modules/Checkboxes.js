@@ -1,3 +1,4 @@
+const storage = require('../localStorage/storage')
 const router = require('express').Router()
 
 router.use((req, res, next) => {
@@ -7,7 +8,8 @@ router.use((req, res, next) => {
 
 router.get('/api/checkboxes', (req, res) => {
   console.log(`Request recieved to endpoint /api/checkboxes`)
-  res.json([{data: ['Strawberry', 'Banana', 'Apple', 'Orange']}])
+  console.log(`Current Storage State: ${storage.values}`)
+  res.json([{data: storage.values}])
 })
 
 module.exports = router

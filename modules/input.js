@@ -1,3 +1,4 @@
+const storage = require('../localStorage/storage')
 const router = require('express').Router()
 const bodyParser = require('body-parser')
 const jsonParser = bodyParser.json()
@@ -7,10 +8,11 @@ router.use((req, res, next) => {
   next()
 })
 
-router.post('/api/fruit', jsonParser, (req, res) => {
-  console.log(`Request recieved to endpoint /api/checkboxes`)
+router.post('/api/input', jsonParser, (req, res) => {
   console.log(req.body)
-  res.send("Ok")
+  res.send(`${res.status}`)
+  console.log('Response sent')
+  storage.values.push(req.body.name)
 })
 
 module.exports = router
