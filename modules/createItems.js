@@ -8,10 +8,9 @@ router.use((req, res, next) => {
   next()
 })
 
-router.post('/api/input', jsonParser, (req, res) => {
+router.post('/api/item', jsonParser, (req, res) => {
   console.log(req.body)
-  res.send(`${res.status}`)
-  console.log('Response sent')
+  res.sendStatus(200)
   storage.values.push(req.body.name)
 })
 
