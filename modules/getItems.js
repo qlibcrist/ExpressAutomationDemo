@@ -2,13 +2,17 @@ const storage = require('../localStorage/storage')
 const router = require('express').Router()
 const bodyParser = require('body-parser')
 
+const route = '/api/item'
+
 router.use((req, res, next) => {
-  console.log(`Request received: Time: ${Date.now()}`)
+  console.log(`GET Request to '${route}' received: Time: ${Date.now()}`)
   next()
 })
 
 router.get('/api/items', (req, res) => {
-  console.log(`Current Storage State: ${storage.values}`)
+  if (storage.values.length > 0) 
+    console.log(`Current storage: ${storage.values.join(', ')}`)
+    
   res.json([{data: storage.values}])
 })
 

@@ -3,15 +3,18 @@ const router = require('express').Router()
 const bodyParser = require('body-parser')
 const jsonParser = bodyParser.json()
 
+const route = '/api/item'
+
 router.use((req, res, next) => {
-  console.log(`Request received: Time: ${Date.now()}`)
+  console.log(`POST Request to '${route}' received: Time: ${Date.now()}`)
   next()
 })
 
-router.post('/api/item', jsonParser, (req, res) => {
-  console.log(req.body)
+router.post(route, jsonParser, (req, res) => {
+  console.log(`Pushing: ${req.body.name}`)
+  storage.values = storage.values.concat([req.body.name])
+  console.log(`Current storage: ${storage.values.join(', ')}`)
   res.sendStatus(200)
-  storage.values.push(req.body.name)
 })
 
 module.exports = router

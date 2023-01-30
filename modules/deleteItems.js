@@ -3,23 +3,27 @@ const router = require('express').Router()
 const bodyParser = require('body-parser')
 const jsonParser = bodyParser.json()
 
+const route = '/api/item'
+
 router.use((req, res, next) => {
-  console.log(`Request received: Time: ${Date.now()}`)
+  console.log(`DELETE Request to '${route}' received: Time: ${Date.now()}`)
   next()
 })
 
-router.get('/api/items', (req, res) => {
-  console.log(`Current Storage State: ${storage.values}`)
-  res.json([{data: storage.values}])
-})
-
-router.delete('/api/item', jsonParser, (req, res) => {
-  const values = req.body.values
-  values.forEach(element => {
-    if (storage.values.includes(element))
-      storage.values.pop(element)
-      console.log(`Popped: ${element}`)
+router.delete(route, jsonParser, (req, res) => {
+  const newValues = []
+  
+  storage.values.forEach(element => {
+    if (req.body.values.includes(element)) {
+      console.log(`Popping: ${element}`)
+    } else {
+      newValues.push(element)
+    }
   });
+
+  storage.values = newValues
+
+  console.log(`Current storage: ${storage.values.join(', ')}`)
 
   res.sendStatus(200)
 })
