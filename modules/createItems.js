@@ -11,6 +11,11 @@ router.use((req, res, next) => {
 })
 
 router.post(route, jsonParser, (req, res) => {
+  if (req.body.name === '' || req.body.name === null || !req.body.name) {
+    res.sendStatus(400)
+    return
+  }
+
   console.log(`Pushing: ${req.body.name}`)
   storage.values = storage.values.concat([req.body.name])
   console.log(`Current storage: ${storage.values.join(', ')}`)
